@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum ResponseCode {
     SUCCESS("0200", "SUCCESS", 200),
-    CREATE("0201", "USER CREATE", 201)
+    CREATE("0201", "USER CREATE", 201),
+    BAD_REQUEST("0400", "BAD REQUEST", 400)
     ;
 
     private String code;

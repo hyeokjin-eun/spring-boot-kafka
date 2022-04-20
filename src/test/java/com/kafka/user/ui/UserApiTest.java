@@ -20,54 +20,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-@DisplayName("회원 API")
 public class UserApiTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    protected UserService userService;
 
     public final ObjectMapper objectMapper = new ObjectMapper();
-
-    @Nested
-    @DisplayName("생성")
-    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-    public class CreateTest {
-
-        private final String URL = "/user";
-        private final String ID = "test";
-        private final String PASSWORD = "password";
-        private final String NAME = "tester";
-
-        @Test
-        @DisplayName("성공")
-        @Order(0)
-        public void create_success() throws Exception {
-            UserCreateRequestDto userCreateRequestDto = UserCreateRequestDto.builder()
-                    .id(ID)
-                    .password(PASSWORD)
-                    .name(NAME)
-                    .build();
-
-            UserCreateResponseDto userCreateResponseDto = UserCreateResponseDto.builder()
-                    .id(ID)
-                    .name(NAME)
-                    .build();
-
-            given(userService.create(any(UserCreateRequestDto.class))).willReturn(userCreateResponseDto);
-
-            mockMvc.perform(post(URL)
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .content(objectMapper.writeValueAsString(userCreateRequestDto)))
-                    .andDo(print())
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.data.id").value(ID))
-                    .andExpect(jsonPath("$.data.name").value(NAME))
-                    ;
-
-            verify(userService).create(any(UserCreateRequestDto.class));
-        }
-    }
 }
