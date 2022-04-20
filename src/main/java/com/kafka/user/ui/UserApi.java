@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("user")
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class UserApi {
 
     @PostMapping("")
     public ResponseEntity<ResponseDto<UserCreateResponseDto>> create(
-            @RequestBody UserCreateRequestDto userCreateRequestDto) {
+            @Valid @RequestBody UserCreateRequestDto userCreateRequestDto) {
         return ResponseDto.create(ResponseCode.CREATE, userService.create(userCreateRequestDto));
     }
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,12 @@ public class ResponseDto<T> {
     public static <T> ResponseEntity<ResponseDto<T>> create(ResponseCode responseCode, T data) {
         ResponseDto<T> responseDto = create(responseCode);
         responseDto.setData(data);
+        return ResponseEntity.status(responseCode.getStatus())
+                .body(responseDto);
+    }
+
+    public static <T> ResponseEntity<ResponseDto<T>> fail(ResponseCode responseCode) {
+        ResponseDto<T> responseDto = create(responseCode);
         return ResponseEntity.status(responseCode.getStatus())
                 .body(responseDto);
     }

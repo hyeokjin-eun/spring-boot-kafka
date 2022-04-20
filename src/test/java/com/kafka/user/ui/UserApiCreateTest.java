@@ -76,4 +76,34 @@ public class UserApiCreateTest extends UserApiTest{
                 .andExpect(jsonPath("$.code").value(ResponseCode.BAD_REQUEST.getCode()))
         ;
     }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("회원 PASSWORD 누락")
+    @Order(2)
+    public void create_password_null_and_empty(String password) throws Exception {
+        userCreateRequestDto.setPassword(password);
+        mockMvc.perform(post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(userCreateRequestDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(ResponseCode.BAD_REQUEST.getCode()))
+        ;
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("회원 NAME 누락")
+    @Order(3)
+    public void create_name_null_and_empty(String name) throws Exception {
+        userCreateRequestDto.setName(name);
+        mockMvc.perform(post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(userCreateRequestDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(ResponseCode.BAD_REQUEST.getCode()))
+        ;
+    }
 }
